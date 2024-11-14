@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::Widget *ui;
-
+    bool is_black=true;
 protected:
 
 };

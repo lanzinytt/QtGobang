@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
-
+#include <QEvent>
 namespace Ui {
 class selfchess;
 }
@@ -15,7 +15,8 @@ public:
     explicit selfchess(QWidget *parent = nullptr);
     ~selfchess();
 protected:
-    void paintEvent(QPaintEvent * event)override;
+    void paintEvent(QPaintEvent *event)override;
+    void mouseMoveEvent(QMouseEvent *event)override;
 private slots:
     void on_giveupButton_clicked();
 

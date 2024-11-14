@@ -23,6 +23,8 @@ private slots:
 
 private:
     Ui::GameBoard *ui;
+    bool is_black;
+    QPoint last_click_pos;
 };
 
 #endif // GAMEBOARD_H
