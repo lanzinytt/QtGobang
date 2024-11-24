@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include "widget.h"
+#include "drawtools.h"
+#include "gobanglogic.h"
 
 namespace Ui {
 class GameBoard;
@@ -16,15 +19,18 @@ public:
     explicit GameBoard(QWidget *parent = nullptr);
     ~GameBoard();
 protected:
-    void paintEvent(QPaintEvent * event)override;
-    void mousePressEvent(QMouseEvent *event) override;
+    void paintEvent(QPaintEvent *event)override;
+    void mouseMoveEvent(QMouseEvent *event)override;
+    void mousePressEvent(QMouseEvent *event)override;
 private slots:
     void on_giveupButton_clicked();
 
 private:
     Ui::GameBoard *ui;
     bool is_black;
-    QPoint last_click_pos;
+    bool gameover;
+    QPoint mousePos;
+    int Board[BOARD_HEIGHT][BOARD_WIDTH];
 };
 
 #endif // GAMEBOARD_H

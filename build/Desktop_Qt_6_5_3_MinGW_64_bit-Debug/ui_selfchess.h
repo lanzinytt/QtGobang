@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
@@ -21,6 +22,7 @@ class Ui_selfchess
 public:
     QPushButton *giveupButton;
     QPushButton *pushButton_2;
+    QLabel *judge_chess;
 
     void setupUi(QWidget *selfchess)
     {
@@ -33,6 +35,9 @@ public:
         pushButton_2 = new QPushButton(selfchess);
         pushButton_2->setObjectName("pushButton_2");
         pushButton_2->setGeometry(QRect(490, 230, 92, 28));
+        judge_chess = new QLabel(selfchess);
+        judge_chess->setObjectName("judge_chess");
+        judge_chess->setGeometry(QRect(500, 50, 69, 19));
 
         retranslateUi(selfchess);
 
@@ -44,6 +49,7 @@ public:
         selfchess->setWindowTitle(QCoreApplication::translate("selfchess", "Form", nullptr));
         giveupButton->setText(QCoreApplication::translate("selfchess", "\350\256\244\350\276\223", nullptr));
         pushButton_2->setText(QCoreApplication::translate("selfchess", "\345\222\214\346\243\213", nullptr));
+        judge_chess->setText(QString());
     } // retranslateUi
 
 };

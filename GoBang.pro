@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     gameboard.cpp \
+    gobanglogic.cpp \
     main.cpp \
     selfchess.cpp \
     widget.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     drawtools.h \
     gameboard.h \
+    gobanglogic.h \
     selfchess.h \
     widget.h
 

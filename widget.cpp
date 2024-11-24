@@ -1,8 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include "drawtools.h"
-#include "selfchess.h"
-#include "gameboard.h"
+
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)

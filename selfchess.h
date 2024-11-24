@@ -4,6 +4,10 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QEvent>
+#include "drawtools.h"
+#include "widget.h"
+#include "gobanglogic.h"
+
 namespace Ui {
 class selfchess;
 }
@@ -17,11 +21,16 @@ public:
 protected:
     void paintEvent(QPaintEvent *event)override;
     void mouseMoveEvent(QMouseEvent *event)override;
+    void mousePressEvent(QMouseEvent *event)override;
 private slots:
     void on_giveupButton_clicked();
 
 private:
     Ui::selfchess *ui;
+    QPoint mousePos;
+    int Board[BOARD_WIDTH][BOARD_HEIGHT];
+    bool is_black;
+    bool gameover;
 };
 
 #endif // SELFCHESS_H

@@ -1,15 +1,16 @@
 #include "gameboard.h"
 #include "ui_gameboard.h"
-#include "drawtools.h"
-#include "widget.h"
+
 
 GameBoard::GameBoard(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::GameBoard),
-    is_black(true), // 初始为黑棋
-    last_click_pos(-1, -1)
+    , ui(new Ui::GameBoard)
 {
     ui->setupUi(this);
+    this->setMouseTracking(true);
+    initBoard(Board);
+    is_black=true;
+    gameover=false;
 }
 
 GameBoard::~GameBoard()
@@ -24,27 +25,35 @@ void GameBoard::on_giveupButton_clicked()
     father->show();
     delete this;
 }
-void GameBoard::paintEvent(QPaintEvent *event)
-{
+void GameBoard::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(Qt::black, 2));
-    Drawer::drawBoard(painter);
+    Drawer::drawBoard(painter);//绘制基本棋盘
+    Drawer::drawSign(painter,mousePos);
+    Drawer::drawStones(painter,Board);
+}
 
-    // 绘制棋子
-    if (last_click_pos != QPoint(-1, -1)) {
-        Drawer::drawStone(painter, last_click_pos, is_black);
+
+void GameBoard::mouseMoveEvent(QMouseEvent *event){
+    mousePos=event->pos();       //获取鼠标位置
+    update();
+}
+
+void GameBoard::mousePressEvent(QMouseEvent *event){
+    if(event->button()==Qt::LeftButton){
+        QPoint clickPos=event->pos();
+        bool change =Drawer::clickreact(clickPos,Board,is_black);
+        if(change){
+            update();
+            qDebug()<<"yes";
+            AIthink(Board);
+            update();
+        }
+
     }
 }
 
-void GameBoard::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton) {
-        last_click_pos = event->pos(); // 记录点击位置
-        is_black = !is_black; // 切换棋子颜色
-        update(); // 触发重绘整个控件
-    }
-}
 
 
 

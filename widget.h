@@ -2,7 +2,9 @@
 #define WIDGET_H
 
 #include <QWidget>
-
+#include "drawtools.h"
+#include "selfchess.h"
+#include "gameboard.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
