@@ -46,7 +46,7 @@ void selfchess::mousePressEvent(QMouseEvent *event){
         if(change){
             is_black=!is_black;
             update();
-            ui->judge_chess->setText(QString::number(evaluateBoard(Board,1)));
+            ui->judge_chess->setText(QString::number(evaluateBoard(Board,1,1)));
         }
 
     }

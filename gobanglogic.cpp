@@ -2,7 +2,7 @@
 #include <QPoint>
 #include <QDebug>
 int bestX=-1;int bestY=-1;
-const int DEPTH=1;
+const int DEPTH=3;
 const int DIRECTIONS[4][2] = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
 void initBoard(int board[BOARD_SIZE][BOARD_SIZE]){
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -12,8 +12,10 @@ void initBoard(int board[BOARD_SIZE][BOARD_SIZE]){
     }
 }
 
-int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
-    int score=0;    bool is_only;           //总分 临时数据
+
+
+int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
+    double score=0;    bool is_only;           //总分 临时数据
     short k;        int now_color=0;        //是否唯一（不唯一则值为0） 计数  是否为正
     int chessList;  int px;     int py;     //录入棋子链 临时x与y
 
@@ -35,7 +37,7 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
                 k++;
             }
             if(k==5 && is_only){
-                score+=results[chessList]*(now_color*color);//这里因为color是-1和1，所有相同是正，相反是减
+                score+=results[chessList]*(now_color*color)*(now_color==color ? 1:bias);//这里因为color是-1和1，所有相同是正，相反是减
             }
         }
     }
@@ -58,7 +60,7 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
                 k++;
             }
             if(k==5 && is_only){
-                score+=results[chessList]*(now_color*color);//这里因为color是-1和1，所有相同是正，相反是减
+                score+=results[chessList]*(now_color*color)*(now_color==color ? 1:bias);//这里因为color是-1和1，所有相同是正，相反是减
             }
         }
     }
@@ -81,7 +83,7 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
                 k++;
             }
             if(k==5 && is_only){
-                score+=results[chessList]*(now_color*color);//这里因为color是-1和1，所有相同是正，相反是减
+                score+=results[chessList]*(now_color*color)*(now_color==color ? 1:bias);//这里因为color是-1和1，所有相同是正，相反是减
             }
         }
     }
@@ -104,7 +106,7 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
                 k++;
             }
             if(k==5 && is_only){
-                score+=results[chessList]*(now_color*color);//这里因为color是-1和1，所有相同是正，相反是减
+                score+=results[chessList]*(now_color*color)*(now_color==color ? 1:bias);//这里因为color是-1和1，所有相同是正，相反是减
             }
         }
     }
@@ -121,7 +123,7 @@ void AIthink(int board[BOARD_SIZE][BOARD_SIZE]){
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color) {
     int score;
     if (depth == 0) {
-        return evaluateBoard(board, color);
+        return evaluateBoard(board,color,0.5);
     }
 
     if (isMax) {
@@ -137,7 +139,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
                         alpha = score;
                         bestX = i;
                         bestY = j; // 更新最佳位置
-                        qDebug() << "Current score: " << score << " at depth: " << depth ;
+//                        qDebug() << "Current score: " << score << " at depth: " << depth ;
                     }
                     if (beta <= alpha) {
                         break; // 剪枝
@@ -158,7 +160,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
                         beta = score;
                         bestX = i;
                         bestY = j; // 更新最佳位置
-                        qDebug() << "Current score: " << score << " at depth: " << depth ;
+//                        qDebug() << "Current score: " << score << " at depth: " << depth ;
                     }
                     if (beta <= alpha) {
                         break; // 剪枝

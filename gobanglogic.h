@@ -60,7 +60,7 @@ void initBoard(int board[BOARD_SIZE][BOARD_SIZE]);
 
 bool checkWin(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color);
 
-int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color);
+int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias);
 
 void AIthink(int board[BOARD_SIZE][BOARD_SIZE]);
 
