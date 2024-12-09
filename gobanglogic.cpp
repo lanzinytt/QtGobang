@@ -142,7 +142,7 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
 
 
 
-void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point last_pt){
+void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point &last_pt){
     int bestX;int bestY;
     int bestscore=INF;
 //    int near=NEARBY;
@@ -178,13 +178,13 @@ void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point last_pt){
     }
     */
     board[bestX][bestY]=-1;
-
+    last_pt.x=bestX;last_pt.y=bestY;
 }
 
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt) {
     int score;
     if (depth == 0 || checkWin(board,last_pt.x,last_pt.y,color)) {
-        if(depth==0) return evaluateBoard(board,color,0.8);
+        if(depth==0) return evaluateBoard(board,color,0.5);
         else{
             return -INF*(color);
         }
@@ -268,109 +268,6 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
     return score;
 }
 
-/*int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color) {
-    int score;
-    if (depth == 0) {
-        return evaluateBoard(board, color);
-    }        // 最大        最小      深度        极大极小标志    棋色
-    if (isMax) {
-        score = -INF;
-        for (int i = 0; i < BOARD_SIZE; ++i) {
-            for (int j = 0; j < BOARD_SIZE; ++j) {
-                if (board[i][j] == 0) {
-                    board[i][j] = color;
-                    score = std::max(score, alphabeta(board, alpha, beta, depth - 1, false, -color));
-                    board[i][j] = 0;
-                    if (score > alpha) {
-                        alpha = score;
-                        bestX = i;
-                        bestY = j; // 更新最佳位置
-                    }else{
-                        break;
-                    }
-                }
-            }
-        }
-    } else {
-        score = INF;
-        for (int i = 0; i < BOARD_SIZE; ++i) {
-            for (int j = 0; j < BOARD_SIZE; ++j) {
-                if (board[i][j] == 0) {
-                    board[i][j] = -color;
-                    score = std::min(score, alphabeta(board, alpha, beta, depth - 1, true, color));
-                    board[i][j] = 0;
-                    if (score < beta) {
-                        beta = score;
-                        bestX = i;
-                        bestY = j; // 更新最佳位置
-                    }else{
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    return score;
-}
-*/
-/*void dfstree(int MAXscore[LAYER],int board[BOARD_SIZE][BOARD_SIZE],int pointchoice[LAYER][2],int layer,int color){
-    for(int i=0;i<BOARD_SIZE;i++){
-        for(int j=0;j<BOARD_SIZE;j++){
-            if(board[i][j]==0){
-                board[i][j]=color;
-                int temp=evaluateBoard(board,color);
-                if(temp > MAXscore[layer]){
-                    MAXscore[layer]=temp;
-                    pointchoice[layer][0]=i;pointchoice[layer][1]=j;
-                    if(layer<LAYER) dfstree(MAXscore,board,pointchoice,layer+1,-color);
-                    if(layer==LAYER)bestchoice[0]=pointchoice[0][0];bestchoice[1]=pointchoice[0][1];
-                }
-                board[i][j]=0;
-            }
-        }
-    }
-}
-*/
-
-/*int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color){
-    int score=0;    bool is_only;           //总分 临时数据
-    short k;        int now_color=0;        //是否唯一（不唯一则值为0） 计数  是否为正
-    int chessList;  int px;     int py;     //录入棋子链 临时x与y
-
-    for(int i=5;i<BOARD_SIZE;i++){
-        for(int j=0;j<BOARD_SIZE;j++){
-
-            is_only=true;   k=0;
-            chessList=0;    px=i;   py=j;
-            while(board[px][py]==0 && k<5){
-                py=DIRECTIONS[3][0]+py;px=DIRECTIONS[3][1]+px;
-                k++;
-            }now_color=board[px][py];
-            while(k<5 && is_only){
-                if(now_color==-board[px][py]){
-                    is_only=false;
-                }
-                chessList=chessList*2+(board[px][py]==0 ? 0:1);
-                py=DIRECTIONS[3][0]+py;px=DIRECTIONS[3][1]+px;
-                k++;
-            }
-            qDebug()<<chessList<<"#";
-            qDebug()<<results[chessList];
-            if(k==5 && is_only){
-                score+=results[chessList]*(now_color*color);//这里因为color是-1和1，所有相同是正，相反是减
-            }
-        }
-    }
-
-//    score+=calculateByDir(board,color,0);
-
-//    score+=calculateByDir(board,color,1);
-
-//    score+=calculateByDir(board,color,2);
-
-    return score;
-}
-*/
 
 bool checkWin(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color) {
 

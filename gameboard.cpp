@@ -9,6 +9,7 @@ GameBoard::GameBoard(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("AImaster!!");
     this->setMouseTracking(true);
+    this->setStyleSheet("background-color: #FFFFE0;");
     initBoard(Board);
     is_black=true;
     gameover=false;
@@ -43,12 +44,16 @@ void GameBoard::mouseMoveEvent(QMouseEvent *event){
 }
 
 void GameBoard::mousePressEvent(QMouseEvent *event){
-    if(event->button()==Qt::LeftButton){
+    if(gameover==false && event->button()==Qt::LeftButton){
         QPoint clickPos=event->pos();
         bool change =Drawer::clickreact(clickPos,Board,is_black,last_pt);
         if(change){
             update();
-            AIthink(Board,last_pt);
+            gameover=checkWin(Board,last_pt.x,last_pt.y,1);
+            if(gameover) ui->response->setText("你赢了，可恶");
+            if(!gameover)AIthink(Board,last_pt);
+            gameover=checkWin(Board,last_pt.x,last_pt.y,-1);
+            if(gameover) ui->response->setText("还得练，杂鱼杂鱼");
             update();
         }
     }
@@ -57,4 +62,15 @@ void GameBoard::mousePressEvent(QMouseEvent *event){
 
 
 
+
+
+void GameBoard::on_peaceButton_clicked()
+{
+    if(evaluateBoard(Board,-1,1)>0){
+        ui->response->setText("AI觉得它胜券在握，并拒绝了和棋");
+    }else{
+        ui->response->setText("AI同意了和棋");
+        gameover=true;
+    }
+}
 

@@ -71,7 +71,7 @@ bool checkWin(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color);
 
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias);
 
-void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point last_pt);
+void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point &last_pt);
 
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt);
 

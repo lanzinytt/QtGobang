@@ -9,6 +9,7 @@ selfchess::selfchess(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("SelfChess && My debug tool");
     this->setMouseTracking(true);
+    this->setStyleSheet("background-color: #FFFFE0;");
     initBoard(Board);
     is_black=true;
     gameover=false;
@@ -60,7 +61,7 @@ void selfchess::mousePressEvent(QMouseEvent *event){
         Board[last_pt.x][last_pt.y]=0;
         is_black=!is_black;
         update();
-        auto start = std::chrono::high_resolution_clock::now();
+        auto start = std::chrono::high_resolution_clock::now(); //runing time
         ui->judge_chess->setText(QString::number(evaluateBoard(Board,1,0.05)));
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> duration = end - start;

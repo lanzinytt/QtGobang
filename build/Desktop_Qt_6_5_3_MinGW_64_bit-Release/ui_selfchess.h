@@ -21,7 +21,6 @@ class Ui_selfchess
 {
 public:
     QPushButton *giveupButton;
-    QPushButton *pushButton_2;
     QLabel *judge_chess;
     QLabel *usedtime;
 
@@ -33,9 +32,6 @@ public:
         giveupButton = new QPushButton(selfchess);
         giveupButton->setObjectName("giveupButton");
         giveupButton->setGeometry(QRect(490, 120, 92, 28));
-        pushButton_2 = new QPushButton(selfchess);
-        pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(490, 230, 92, 28));
         judge_chess = new QLabel(selfchess);
         judge_chess->setObjectName("judge_chess");
         judge_chess->setGeometry(QRect(500, 50, 69, 19));
@@ -51,8 +47,7 @@ public:
     void retranslateUi(QWidget *selfchess)
     {
         selfchess->setWindowTitle(QCoreApplication::translate("selfchess", "Form", nullptr));
-        giveupButton->setText(QCoreApplication::translate("selfchess", "\350\256\244\350\276\223", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("selfchess", "\345\222\214\346\243\213", nullptr));
+        giveupButton->setText(QCoreApplication::translate("selfchess", "\351\200\200\345\207\272", nullptr));
         judge_chess->setText(QCoreApplication::translate("selfchess", "0", nullptr));
         usedtime->setText(QCoreApplication::translate("selfchess", "0", nullptr));
     } // retranslateUi

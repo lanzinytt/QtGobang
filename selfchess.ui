@@ -23,20 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>认输</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>230</y>
-     <width>92</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>和棋</string>
+    <string>退出</string>
    </property>
   </widget>
   <widget class="QLabel" name="judge_chess">

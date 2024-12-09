@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
@@ -21,6 +22,7 @@ class Ui_GameBoard
 public:
     QPushButton *giveupButton;
     QPushButton *peaceButton;
+    QLabel *response;
 
     void setupUi(QWidget *GameBoard)
     {
@@ -33,6 +35,9 @@ public:
         peaceButton = new QPushButton(GameBoard);
         peaceButton->setObjectName("peaceButton");
         peaceButton->setGeometry(QRect(580, 230, 92, 28));
+        response = new QLabel(GameBoard);
+        response->setObjectName("response");
+        response->setGeometry(QRect(490, 290, 191, 71));
 
         retranslateUi(GameBoard);
 
@@ -44,6 +49,7 @@ public:
         GameBoard->setWindowTitle(QCoreApplication::translate("GameBoard", "Form", nullptr));
         giveupButton->setText(QCoreApplication::translate("GameBoard", "\350\256\244\350\276\223", nullptr));
         peaceButton->setText(QCoreApplication::translate("GameBoard", "\345\222\214\346\243\213", nullptr));
+        response->setText(QString());
     } // retranslateUi
 
 };

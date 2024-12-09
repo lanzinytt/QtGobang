@@ -39,6 +39,19 @@
     <string>和棋</string>
    </property>
   </widget>
+  <widget class="QLabel" name="response">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>290</y>
+     <width>191</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

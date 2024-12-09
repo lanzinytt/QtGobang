@@ -27,6 +27,8 @@ protected:
 private slots:
     void on_giveupButton_clicked();
 
+    void on_peaceButton_clicked();
+
 private:
     Ui::GameBoard *ui;
     bool is_black;
