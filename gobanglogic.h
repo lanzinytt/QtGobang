@@ -1,5 +1,7 @@
 #ifndef GOBANGLOGIC_H
 #define GOBANGLOGIC_H
+#include <vector>
+#include <cstdlib>
 //int const FIVE=1000000;
 //int const LIVEFOUR=10000;int const LIVETHREE=1000;int const LIVETWO=100;int const LIVEONE=10;
 //int const DYINGFOUR=1000;int const DYINGTHREE=100;int const DYINGTWO=10;
@@ -13,12 +15,19 @@ int const CONTI_FOUR=1000;int DIVID_FOUR=800; //这俩定义过？
 
 int const FIVE=1000000;
 */
+const int DEPTH=5;
+const int NEARBY=4;
+const int DIRECTIONS[4][2] = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
+struct Point{
+    int x,y;
+};
+
 int const LAYER = 5;
 int const BOARD_SIZE = 15;
 int const INF=999999999;
 static constexpr int results[]
-    = { 0,5,5,80,5,60,100,500,5,20,80,500,100,500,8000,10000,5,10,//0-17
-       20,600,50,600,500,8000,80,600,500,6000,500,8000,10000,10000000 };//18-31
+    = { 0,5,5,80,5,60,100,500,5,20,80,500,100,500,8000,20000,5,10,//0-17
+       20,600,50,600,500,8000,80,600,500,6000,500,8000,20000,1000000 };//18-31
 /*
     * 十进制-二进制-得分
     * 0-00000-0-NOCHESS
@@ -62,9 +71,9 @@ bool checkWin(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color);
 
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias);
 
-void AIthink(int board[BOARD_SIZE][BOARD_SIZE]);
+void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point last_pt);
 
-int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color);
+int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt);
 
 void dfstree(int MAXscore[LAYER],int board[BOARD_SIZE][BOARD_SIZE],int pointchoice[LAYER][2],int layer,int color);
 

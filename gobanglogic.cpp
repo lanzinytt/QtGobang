@@ -1,9 +1,17 @@
 #include "gobanglogic.h"
 #include <QPoint>
 #include <QDebug>
-int bestX=-1;int bestY=-1;
-const int DEPTH=3;
-const int DIRECTIONS[4][2] = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
+
+
+void initVector(std::vector<Point> &blank_list){
+    for(int i=0;i<BOARD_SIZE;i++){
+        for(int j=0;j<BOARD_SIZE;j++){
+            blank_list[i*BOARD_SIZE+j].x=i;
+            blank_list[i*BOARD_SIZE+j].y=j;
+        }
+    }
+}
+
 void initBoard(int board[BOARD_SIZE][BOARD_SIZE]){
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
@@ -12,7 +20,25 @@ void initBoard(int board[BOARD_SIZE][BOARD_SIZE]){
     }
 }
 
+int compa(const Point &a,const Point &b){
+    return std::abs(a.x-b.x)+std::abs(a.y-b.y);
+}
 
+void order(std::vector<Point> &blank_list,Point &last_pt){
+    Point temp;
+    for(int i=0;i<BOARD_SIZE*BOARD_SIZE;i++){
+        temp=blank_list[i];
+        if(compa(temp,last_pt)<=NEARBY){
+            /*
+            if(board[temp.x][temp.y]!=0){
+                count++;
+            }
+            */
+            blank_list.erase(blank_list.begin()+i);
+            blank_list.insert(blank_list.begin(),temp);
+        }
+    }
+}
 
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
     double score=0;    bool is_only;           //总分 临时数据
@@ -114,32 +140,84 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
     return score;
 }
 
-void AIthink(int board[BOARD_SIZE][BOARD_SIZE]){
-    alphabeta(board,-INF,INF,DEPTH,false,-1);
+
+
+void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point last_pt){
+    int bestX;int bestY;
+    int bestscore=INF;
+//    int near=NEARBY;
+    int v;std::vector<Point> blank_list(BOARD_SIZE*BOARD_SIZE);
+
+    initVector(blank_list);
+    Point temp;
+
+    order(blank_list,last_pt);
+
+    for(int i=0;i<NEARBY*NEARBY*2*2;i++){
+            temp=blank_list[i];
+            if(board[temp.x][temp.y]!=0) continue;
+            board[temp.x][temp.y]=-1;
+            v=alphabeta(board,-INF,INF,DEPTH-1,true,1,blank_list,temp);
+            board[temp.x][temp.y]=0;
+            if(bestscore>v){
+                bestscore=v;bestX=temp.x;bestY=temp.y;
+            }
+
+    }
+    /*
+    for(int i=0;i<BOARD_SIZE;i++){
+        for(int j=0;j<BOARD_SIZE;j++){
+            if(board[i][j]!=0) continue;
+            board[i][j]=-1;
+            v=alphabeta(board,-INF,INF,DEPTH-1,true,1,blank_list,temp);
+            board[i][j]=0;
+            if(bestscore>v){
+                bestscore=v;bestX=i;bestY=j;
+            }
+        }
+    }
+    */
     board[bestX][bestY]=-1;
 
 }
 
-int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color) {
+int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt) {
     int score;
-    if (depth == 0) {
-        return evaluateBoard(board,color,0.5);
+    if (depth == 0 || checkWin(board,last_pt.x,last_pt.y,color)) {
+        if(depth==0) return evaluateBoard(board,color,0.8);
+        else{
+            return -INF*(color);
+        }
     }
-
+    Point temp;
     if (isMax) {
+
         score = -INF;
+
+        order(blank_list,last_pt);
+        for(int i=0;i<NEARBY*NEARBY*2*2*2;i++){
+            temp=blank_list[i];
+            if(board[temp.x][temp.y]!=0) continue;
+            board[temp.x][temp.y]=color;
+            score=std::max(score,alphabeta(board,beta,alpha,depth-1,false,-color,blank_list,temp));
+            board[temp.x][temp.y]=0;
+            if(score > alpha){
+                alpha=score;
+            }
+            if(beta <= alpha){
+                break;
+            }
+        }
+        /*
         for (int i = 0; i < BOARD_SIZE; ++i) {
             for (int j = 0; j < BOARD_SIZE; ++j) {
                 if (board[i][j] == 0) {
                     board[i][j] = color;
-                    score = std::max(score, alphabeta(board, alpha, beta, depth - 1, false, -color));
+                    score = std::max(score, alphabeta(board, alpha, beta, depth - 1, false, -color,blank_list,temp));
                     board[i][j] = 0;
 
                     if (score > alpha) {
                         alpha = score;
-                        bestX = i;
-                        bestY = j; // 更新最佳位置
-//                        qDebug() << "Current score: " << score << " at depth: " << depth ;
                     }
                     if (beta <= alpha) {
                         break; // 剪枝
@@ -147,20 +225,36 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
                 }
             }
         }
+        */
     } else {
+        score = INF;
+
+        order(blank_list,last_pt);
+        for(int i=0;i<NEARBY*NEARBY*2*2;i++){//改为near好调试
+
+            temp=blank_list[i];
+            if(board[temp.x][temp.y]!=0) continue;
+            board[temp.x][temp.y]=color;
+            score=std::min(score,alphabeta(board,beta,alpha,depth-1,true,-color,blank_list,temp));
+            board[temp.x][temp.y]=0;
+            if(score < beta){
+                beta=score;
+            }
+            if(beta <= alpha){
+                break;
+            }
+        }
+        /*
         score = INF;
         for (int i = 0; i < BOARD_SIZE; ++i) {
             for (int j = 0; j < BOARD_SIZE; ++j) {
                 if (board[i][j] == 0) {
                     board[i][j] = -color;
-                    score = std::min(score, alphabeta(board, alpha, beta, depth - 1, true, color));
+                    score = std::min(score, alphabeta(board, alpha, beta, depth - 1, false, -color,blank_list,temp));
                     board[i][j] = 0;
 
                     if (score < beta) {
                         beta = score;
-                        bestX = i;
-                        bestY = j; // 更新最佳位置
-//                        qDebug() << "Current score: " << score << " at depth: " << depth ;
                     }
                     if (beta <= alpha) {
                         break; // 剪枝
@@ -168,6 +262,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
                 }
             }
         }
+        */
     }
 
     return score;

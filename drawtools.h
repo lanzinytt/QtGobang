@@ -21,7 +21,7 @@
 
 class Drawer{
 public:
-    static bool  clickreact(const QPoint &position ,int Board[BOARD_HEIGHT][BOARD_WIDTH],bool is_black){
+    static bool  clickreact(const QPoint &position ,int Board[BOARD_HEIGHT][BOARD_WIDTH],bool is_black,Point &last_pt){
 
         int px = position.x();int py = position.y();
         // 检查位置是否越界
@@ -41,6 +41,7 @@ public:
         }else{
             Board[gridX][gridY]=IS_WHITE;
         }
+        last_pt.x=gridX;last_pt.y=gridY;
         if(checkWin(Board,gridX,gridY,(is_black ? IS_BLACK:IS_WHITE))){
             qDebug()<<"finish";
         }

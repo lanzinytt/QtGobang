@@ -1,15 +1,18 @@
 #include "selfchess.h"
 #include "ui_selfchess.h"
+#include <chrono>
 
 selfchess::selfchess(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::selfchess)
 {
     ui->setupUi(this);
+    setWindowTitle("SelfChess && My debug tool");
     this->setMouseTracking(true);
     initBoard(Board);
     is_black=true;
     gameover=false;
+    last_pt.x=-1;last_pt.y=-1;
 }
 
 selfchess::~selfchess()
@@ -42,13 +45,26 @@ void selfchess::on_giveupButton_clicked()
 void selfchess::mousePressEvent(QMouseEvent *event){
     if(event->button()==Qt::LeftButton){
         QPoint clickPos=event->pos();
-        bool change =Drawer::clickreact(clickPos,Board,is_black);
+        bool change =Drawer::clickreact(clickPos,Board,is_black,last_pt);
         if(change){
             is_black=!is_black;
             update();
-            ui->judge_chess->setText(QString::number(evaluateBoard(Board,1,1)));
+            auto start = std::chrono::high_resolution_clock::now();
+            ui->judge_chess->setText(QString::number(evaluateBoard(Board,1,0.05)));
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> duration = end - start;
+            ui->usedtime->setText(QString::number(duration.count()));
         }
-
+    }
+    if(last_pt.x!=-1 && event->button()==Qt::RightButton){
+        Board[last_pt.x][last_pt.y]=0;
+        is_black=!is_black;
+        update();
+        auto start = std::chrono::high_resolution_clock::now();
+        ui->judge_chess->setText(QString::number(evaluateBoard(Board,1,0.05)));
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> duration = end - start;
+        ui->usedtime->setText(QString::number(duration.count()));
     }
 }
 

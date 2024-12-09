@@ -7,10 +7,12 @@ GameBoard::GameBoard(QWidget *parent)
     , ui(new Ui::GameBoard)
 {
     ui->setupUi(this);
+    setWindowTitle("AImaster!!");
     this->setMouseTracking(true);
     initBoard(Board);
     is_black=true;
     gameover=false;
+    last_pt.x=-1;last_pt.y=-1;
 }
 
 GameBoard::~GameBoard()
@@ -43,15 +45,14 @@ void GameBoard::mouseMoveEvent(QMouseEvent *event){
 void GameBoard::mousePressEvent(QMouseEvent *event){
     if(event->button()==Qt::LeftButton){
         QPoint clickPos=event->pos();
-        bool change =Drawer::clickreact(clickPos,Board,is_black);
+        bool change =Drawer::clickreact(clickPos,Board,is_black,last_pt);
         if(change){
             update();
-            qDebug()<<"yes";
-            AIthink(Board);
+            AIthink(Board,last_pt);
             update();
         }
-
     }
+
 }
 
 

@@ -3,10 +3,10 @@
 
 #include <QWidget>
 #include <QMouseEvent>
-#include <QEvent>
-#include "drawtools.h"
+
 #include "widget.h"
 #include "gobanglogic.h"
+#include "drawtools.h"
 
 namespace Ui {
 class selfchess;
@@ -27,10 +27,11 @@ private slots:
 
 private:
     Ui::selfchess *ui;
-    QPoint mousePos;
-    int Board[BOARD_WIDTH][BOARD_HEIGHT];
-    bool is_black;
-    bool gameover;
+    QPoint  mousePos;
+    Point   last_pt;
+    int     Board[BOARD_WIDTH][BOARD_HEIGHT];
+    bool    is_black;
+    bool    gameover;
 };
 
 #endif // SELFCHESS_H

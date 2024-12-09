@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>659</width>
-    <height>433</height>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,20 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="usedtime">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>30</y>
+     <width>69</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
    </property>
   </widget>
  </widget>

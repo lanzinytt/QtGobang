@@ -3,9 +3,11 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+
 #include "widget.h"
-#include "drawtools.h"
 #include "gobanglogic.h"
+#include "drawtools.h"
+
 
 namespace Ui {
 class GameBoard;
@@ -30,6 +32,7 @@ private:
     bool is_black;
     bool gameover;
     QPoint mousePos;
+    Point last_pt;
     int Board[BOARD_HEIGHT][BOARD_WIDTH];
 };
 
