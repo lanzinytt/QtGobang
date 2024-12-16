@@ -35,6 +35,9 @@ private:
     QMessageBox msgBox;
     bool is_black;
     bool gameover;
+    QImage* imga;
+    QImage* imgb;
+    QImage* imgc;
     QPoint mousePos;
     Point last_pt;
     int Board[BOARD_HEIGHT][BOARD_WIDTH];

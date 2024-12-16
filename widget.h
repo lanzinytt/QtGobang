@@ -28,6 +28,9 @@ private slots:
 private:
     Ui::Widget *ui;
     bool is_black=true;
+    QPixmap pixmap;
+    QImage* img;
+    QPalette palette;
 protected:
 
 };

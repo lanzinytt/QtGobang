@@ -41,7 +41,11 @@ public:
         response->setGeometry(QRect(490, 430, 191, 71));
         label = new QLabel(GameBoard);
         label->setObjectName("label");
-        label->setGeometry(QRect(560, 100, 69, 19));
+        label->setGeometry(QRect(500, 20, 181, 191));
+        label->setMinimumSize(QSize(181, 191));
+        label->setMaximumSize(QSize(181, 191));
+        label->setScaledContents(true);
+        label->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         retranslateUi(GameBoard);
 

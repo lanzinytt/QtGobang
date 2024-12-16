@@ -8,6 +8,7 @@ selfchess::selfchess(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("SelfChess && My debug tool");
+    setWindowIcon(QIcon(":/interaction source/picture/R-C-001.ico"));
     this->setMouseTracking(true);
     this->setStyleSheet("background-color: #FFFFE0;");
     initBoard(Board);

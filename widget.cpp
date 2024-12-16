@@ -8,6 +8,11 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("GoBang QwQ");
+    ui->pic->setGeometry(0, 0, this->width(), this->height());
+    QPixmap pixmap(":/interaction source/picture/board-p.png");
+    ui->pic->setPixmap(pixmap);
+    ui->pic->setScaledContents(true);
+    setWindowIcon(QIcon(":/interaction source/picture/R-C-001.ico"));
 }
 
 Widget::~Widget()
