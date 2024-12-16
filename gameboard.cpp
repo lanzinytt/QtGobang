@@ -50,10 +50,19 @@ void GameBoard::mousePressEvent(QMouseEvent *event){
         if(change){
             update();
             gameover=checkWin(Board,last_pt.x,last_pt.y,1);
-            if(gameover) ui->response->setText("你赢了，可恶");
+
+            if(gameover){
+                msgBox.setText("可恶，居然让你赢了");
+                msgBox.exec();
+                ui->giveupButton->setText("退出");
+            }
             if(!gameover)AIthink(Board,last_pt);
             gameover=checkWin(Board,last_pt.x,last_pt.y,-1);
-            if(gameover) ui->response->setText("还得练，杂鱼杂鱼");
+            if(gameover){
+                msgBox.setText("还得练，杂鱼杂鱼");
+                msgBox.exec();
+                ui->giveupButton->setText("退出");
+            }
             update();
         }
     }
@@ -65,12 +74,16 @@ void GameBoard::mousePressEvent(QMouseEvent *event){
 
 
 void GameBoard::on_peaceButton_clicked()
-{
+{   if(gameover) return;
     if(evaluateBoard(Board,-1,1)>0){
-        ui->response->setText("AI觉得它胜券在握，并拒绝了和棋");
+        msgBox.setText("AI觉得它胜券在握，并拒绝了和棋");
+        msgBox.exec();
     }else{
-        ui->response->setText("AI同意了和棋");
         gameover=true;
+        msgBox.setText("AI同意了和棋");
+        msgBox.setStandardButtons(QMessageBox::Cancel);
+        msgBox.exec();
+        ui->giveupButton->setText("退出");
     }
 }
 

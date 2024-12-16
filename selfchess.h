@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QMouseEvent>
-
 #include "widget.h"
 #include "gobanglogic.h"
 #include "drawtools.h"

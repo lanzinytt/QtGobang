@@ -184,9 +184,9 @@ void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point &last_pt){
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt) {
     int score;
     if (depth == 0 || checkWin(board,last_pt.x,last_pt.y,color)) {
-        if(depth==0) return evaluateBoard(board,color,0.5);
+        if(depth==0) return evaluateBoard(board,color,0.7);
         else{
-            return -INF*(color);
+            return INF*(color);
         }
     }
     Point temp;
@@ -195,7 +195,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
         score = -INF;
 
         order(blank_list,last_pt);
-        for(int i=0;i<NEARBY*NEARBY*2*2*2;i++){
+        for(int i=0;i<NEARBY*NEARBY*2*2;i++){
             temp=blank_list[i];
             if(board[temp.x][temp.y]!=0) continue;
             board[temp.x][temp.y]=color;
@@ -230,7 +230,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth,
         score = INF;
 
         order(blank_list,last_pt);
-        for(int i=0;i<NEARBY*NEARBY*2*2;i++){//改为near好调试
+        for(int i=0;i<NEARBY*NEARBY*2;i++){//改为near好调试
 
             temp=blank_list[i];
             if(board[temp.x][temp.y]!=0) continue;

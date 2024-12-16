@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QMessageBox>
 
 #include "widget.h"
 #include "gobanglogic.h"
@@ -31,6 +32,7 @@ private slots:
 
 private:
     Ui::GameBoard *ui;
+    QMessageBox msgBox;
     bool is_black;
     bool gameover;
     QPoint mousePos;
