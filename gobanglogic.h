@@ -24,10 +24,10 @@ struct Point{
 
 int const LAYER = 5;
 int const BOARD_SIZE = 15;
-int const INF=999999999;
+int const INF=9999999;
 static constexpr int results[]
-    = { 0,5,5,80,5,60,100,500,5,20,80,500,100,500,8000,20000,5,10,//0-17
-       20,600,50,600,500,8000,80,600,500,6000,500,8000,20000,1000000 };//18-31
+    = { 0,5,5,80,5,60,100,500,5,20,80,500,100,500,8000,200000,5,10,//0-17
+       20,600,50,600,500,8000,80,600,500,6000,500,8000,200000,10000000 };//18-31
 /*
     * 十进制-二进制-得分
     * 0-00000-0-NOCHESS
@@ -69,7 +69,7 @@ void initBoard(int board[BOARD_SIZE][BOARD_SIZE]);
 
 bool checkWin(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color);
 
-int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias);
+long long evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias);
 
 void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point &last_pt);
 

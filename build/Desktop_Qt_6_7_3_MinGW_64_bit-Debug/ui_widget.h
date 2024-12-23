@@ -22,28 +22,32 @@ class Ui_Widget
 public:
     QPushButton *aiButton;
     QPushButton *playselfButton;
-    QLabel *label_2;
     QLabel *label;
+    QLabel *pic;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
-        Widget->resize(347, 311);
+        Widget->resize(417, 375);
         aiButton = new QPushButton(Widget);
         aiButton->setObjectName("aiButton");
-        aiButton->setGeometry(QRect(220, 240, 80, 50));
+        aiButton->setGeometry(QRect(290, 280, 80, 50));
         aiButton->setMinimumSize(QSize(0, 50));
         playselfButton = new QPushButton(Widget);
         playselfButton->setObjectName("playselfButton");
-        playselfButton->setGeometry(QRect(220, 170, 80, 50));
+        playselfButton->setGeometry(QRect(290, 190, 80, 50));
         playselfButton->setMinimumSize(QSize(0, 50));
-        label_2 = new QLabel(Widget);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(110, 80, 121, 41));
         label = new QLabel(Widget);
         label->setObjectName("label");
-        label->setGeometry(QRect(60, 190, 121, 20));
+        label->setGeometry(QRect(130, 120, 121, 41));
+        pic = new QLabel(Widget);
+        pic->setObjectName("pic");
+        pic->setGeometry(QRect(130, 150, 69, 19));
+        pic->raise();
+        aiButton->raise();
+        playselfButton->raise();
+        label->raise();
 
         retranslateUi(Widget);
 
@@ -55,8 +59,8 @@ public:
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
         aiButton->setText(QCoreApplication::translate("Widget", "AI", nullptr));
         playselfButton->setText(QCoreApplication::translate("Widget", "\345\215\225\344\272\272", nullptr));
-        label_2->setText(QCoreApplication::translate("Widget", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:700;\">\344\272\224\345\255\220\346\243\213</span></p></body></html>", nullptr));
-        label->setText(QCoreApplication::translate("Widget", "\351\200\211\346\213\251\346\270\270\347\216\251\346\226\271\345\274\217", nullptr));
+        label->setText(QCoreApplication::translate("Widget", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-weight:700;\">\344\272\224\345\255\220\346\243\213</span></p></body></html>", nullptr));
+        pic->setText(QString());
     } // retranslateUi
 
 };

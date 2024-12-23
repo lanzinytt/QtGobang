@@ -40,7 +40,7 @@ void order(std::vector<Point> &blank_list,Point &last_pt){
     }
 }
 
-int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
+long long evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE],int color,double bias){
     double score=0;    bool is_only;           //总分 临时数据
     short k;        int now_color=0;        //是否唯一（不唯一则值为0） 计数  是否为正
     int chessList;  int px;     int py;     //录入棋子链 临时x与y
@@ -184,13 +184,13 @@ void AIthink(int board[BOARD_SIZE][BOARD_SIZE],Point &last_pt){
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int alpha, int beta, int depth, bool isMax, int color,std::vector<Point> blank_list,Point last_pt) {
     int score;
     if (depth == 0 || checkWin(board,last_pt.x,last_pt.y,color)) {
-        if(depth==0) return evaluateBoard(board,color,0.8);
-        else{
-            return INF*(color);
+        if(checkWin(board,last_pt.x,last_pt.y,-1)){
+            return color*INF;
         }
+        return evaluateBoard(board,color,0.9);
     }
     Point temp;
-    if (isMax) {
+    if (-isMax) {
 
         score = -INF;
 
